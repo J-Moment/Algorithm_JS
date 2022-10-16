@@ -7,4 +7,4 @@ function solution(sizes) {
         if (h > maxSize[1]) maxSize[1] = h;
     })
     return maxSize[0]*maxSize[1];
-}
+}   
