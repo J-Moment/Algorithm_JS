@@ -14,7 +14,7 @@ function solution(N, road, K) {
     while (queue.length) {
         let { to } = queue.pop();
 
-        lines[to].forEach((next) => {
+        lines[to].forEach((next) => {   
             if (arr[next.to] > arr[to] + next.cost) {
                 arr[next.to] = arr[to] + next.cost;
                 queue.push(next);
