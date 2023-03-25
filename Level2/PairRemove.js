@@ -4,9 +4,9 @@ function solution(s) {
         if (stack.length === 0 || stack[stack.length - 1] !== s[i]) {
             stack.push(s[i]);
         }
-        else (
+        else {
             stack.pop()
-        );
+        };
     }
     return stack.length === 0 ? 1 : 0;
 }
