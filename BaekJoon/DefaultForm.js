@@ -1,5 +1,6 @@
 // readline 모듈 사용
 // ** 한 줄 입력 **
+/*
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -14,8 +15,10 @@ rl.on('line', function(line) {
 }).on("close", function() {
   process.exit();
 });
+*/
 
 
+/*
 // ** 여러 줄 입력 **
 const readline = require('readline');
 
@@ -33,8 +36,10 @@ rl.on('line', function (line) {
   console.log(input);
   process.exit();
 });
+*/
 
 
+/*
 // fs 모듈 사용
 
 // ** 한 줄 입력 **
@@ -46,7 +51,9 @@ let num = Number(input);
 for (let i = 1; i <= num; i++) {
   console.log(i);
 }
+*/
 
+/*
 // ** 여러 줄 입력 **
 let fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString().split('\n');
@@ -66,3 +73,4 @@ for (let i = 0; i < numbers.length; i++){
 
   console.log(num1 + num2);
 }
+*/
