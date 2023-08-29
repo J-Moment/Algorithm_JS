@@ -18,7 +18,7 @@ rl.on('line', function(line) {
 */
 
 /*
-// ** 여러 줄 입력 **
+// ** 한 줄에 정수 여러개 입력 **
 function solution(a , b){
     console.log(a+b);
 }
@@ -38,6 +38,29 @@ rl.on("line", function(line){
     solution(A, B);
     process.exit();
 })
+*/
+
+
+/*
+// ** 정수 하나 입력 **
+function solution(num) {
+
+}
+
+const readline = require('readline');
+let input;
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.on('line', function(line) {
+    input = pareInt(line);
+    rl.close();
+}).on("close", function() {
+    solution(input);
+    process.exit();
+});
 */
 
 /*
