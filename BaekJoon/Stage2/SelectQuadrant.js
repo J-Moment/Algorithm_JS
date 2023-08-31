@@ -26,7 +26,7 @@ let input = [];
 
 rl.on('line', function (line) {
     input.push(line);
-})
+}) 
   .on('close', function () {
     const first = parseInt(input[0]);
     const second = parseInt(input[1]);
