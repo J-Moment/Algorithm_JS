@@ -1,3 +1,7 @@
+function solution(str, num) {
+    console.log(str[num-1]);
+}
+
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -11,8 +15,8 @@ rl.on('line', function (line) {
   input.push(line)
 })
   .on('close', function () {
-    let num = input[0];
-    arr = input[1].split(' ').map((el) => parseInt(el));
-    solution(num, arr);
+    let str = input[0].toString();
+    let num = parseInt(input[1]);
+    solution(str, num);
   process.exit();
 });
