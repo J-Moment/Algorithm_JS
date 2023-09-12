@@ -1,3 +1,19 @@
+function solution( N, M ) {
+  let arr = new Array(N);
+
+  for(let i = 1 ; i <= M ; i++) {
+    let [start, end, num] = input[i].split(" ").map(el => +el);
+
+    for(start ; start <= end ; start++) {
+      arr[start-1] = num;
+    }
+  }
+  for(let i = 0 ; i < arr.length ; i++) {
+    typeof arr[i] === "undefined" ? arr[i] = 0 : arr[i];
+  }
+  console.log(arr.join(" "));
+}
+
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -11,8 +27,7 @@ rl.on('line', function (line) {
   input.push(line)
 })
   .on('close', function () {
-    let num = input[0];
-    arr = input[1].split(' ').map((el) => parseInt(el));
-    solution(num, arr);
+    const [N, M] = input[0].split(" ").map(el => +el);
+    solution(N, M);
   process.exit();
 });
