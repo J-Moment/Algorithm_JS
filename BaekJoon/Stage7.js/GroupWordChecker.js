@@ -18,7 +18,7 @@ for (let i = 1; i <= caseCount; i++) {
         break;
       }
     }
-  }
+  } 
 
   if (isGroupWord) {
     countGroupWord += 1;
