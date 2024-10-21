@@ -55,7 +55,7 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', function(line) {
-    input = pareInt(line);
+    input = parseInt(line);
     rl.close();
 }).on("close", function() {
     solution(input);
@@ -88,14 +88,16 @@ rl.on('line', function (line) {
 // fs 모듈 사용
 
 // ** 한 줄 입력 **
-let fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().split(' ');
+const fs = require('fs');
+const filepath = process.platform === 'linux' ? '/dev/stdin' : './input.txt';
+let input = fs.readFileSync(filepath).toString().trim().split('\n');
+*/
 
-let num = Number(input);
-
-for (let i = 1; i <= num; i++) {
-  console.log(i);
-}
+// **입력**
+/*
+const fs = require('fs');
+const filepath = process.platform === 'linux' ? '/dev/stdin' : './input.txt';
+let input = fs.readFileSync(filepath).toString().split('\n');
 */
 
 /*
