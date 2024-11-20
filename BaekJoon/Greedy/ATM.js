@@ -7,7 +7,7 @@ const arr = input[1].split(' ').map((item) => +item);
 
 let answer = 0;
 arr.sort((a, b) => a - b)
-for (i = 0 ; i < N ; i++) {
+for (let i = 0 ; i < N ; i++) {
     answer += arr[i] * (N-i)
 }
 console.log(answer);
