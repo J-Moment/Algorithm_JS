@@ -10,7 +10,9 @@ const dp = new Array(N);
 for (let i = 0; i < N; i++) {
   let max = 0;
   for (let j = 0; j <= i; j++) {
-    if (li[j] < li[i]) max = Math.max(max, dp[j]);
+    if (li[j] < li[i]) {
+      max = Math.max(max, dp[j]);
+    }
   }
   dp[i] = max + 1;
 }
