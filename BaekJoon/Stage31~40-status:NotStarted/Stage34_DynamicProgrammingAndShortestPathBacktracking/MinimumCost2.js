@@ -14,25 +14,61 @@ for (let i = 2; i < 2 + m; i++) {
 
 const [start, end] = input[2 + m].split(" ").map(Number);
 const dist = Array(n + 1).fill(INF);
-const visited = Array(n + 1).fill(false);
 const from = Array(n + 1).fill(0);
 
-const pq = [];
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  push(value) {
+    this.heap.push(value);
+    let idx = this.heap.length - 1;
+    while (idx > 0) {
+      let parent = Math.floor((idx - 1) / 2);
+      if (this.heap[parent][0] <= value[0]) break;
+      [this.heap[idx], this.heap[parent]] = [this.heap[parent], this.heap[idx]];
+      idx = parent;
+    }
+  }
+
+  pop() {
+    if (this.heap.length === 1) return this.heap.pop();
+    const top = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    let idx = 0;
+    while (true) {
+      let left = 2 * idx + 1;
+      let right = 2 * idx + 2;
+      let smallest = idx;
+      if (left < this.heap.length && this.heap[left][0] < this.heap[smallest][0]) smallest = left;
+      if (right < this.heap.length && this.heap[right][0] < this.heap[smallest][0]) smallest = right;
+      if (smallest === idx) break;
+      [this.heap[idx], this.heap[smallest]] = [this.heap[smallest], this.heap[idx]];
+      idx = smallest;
+    }
+    return top;
+  }
+
+  size() {
+    return this.heap.length;
+  }
+}
+
+const heap = new MinHeap();
 dist[start] = 0;
-pq.push([0, start]);
+heap.push([0, start]);
 
-while (pq.length) {
-  pq.sort((a, b) => a[0] - b[0]);
-  const [curCost, cur] = pq.shift();
+while (heap.size()) {
+  const [curCost, cur] = heap.pop();
 
-  if (visited[cur]) continue;
-  visited[cur] = true;
+  if (dist[cur] < curCost) continue;
 
   for (const [next, cost] of graph[cur]) {
     if (dist[next] > dist[cur] + cost) {
       dist[next] = dist[cur] + cost;
       from[next] = cur;
-      pq.push([dist[next], next]);
+      heap.push([dist[next], next]);
     }
   }
 }
