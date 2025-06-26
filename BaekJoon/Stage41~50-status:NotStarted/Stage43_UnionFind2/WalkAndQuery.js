@@ -1,71 +1,61 @@
 const fs = require("fs");
 const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
-let idx = 0;
-const [n, m, q] = input[idx++].split(" ").map(Number);
 
-const edges = [];
-for (let i = 0; i < m; i++) {
-  const [u, v] = input[idx++].split(" ").map(Number);
-  edges.push([u, v]);
-}
-
-const queries = [];
-for (let i = 0; i < q; i++) {
-  const [s, t] = input[idx++].split(" ").map(Number);
-  queries.push([s, t]);
-}
-
-const N = n;
-const N2 = n * 2;
-const parent = Array(N2 + 1)
-  .fill(0)
-  .map((_, i) => i);
-const sizeEven = Array(N2 + 1).fill(0);
-const sizeOdd = Array(N2 + 1).fill(0);
+const [N, Q] = input[0].split(" ").map(Number);
+const parent = Array.from({ length: N + 1 }, (_, i) => i);
+const color = Array(N + 1).fill(0);
+const compSize = Array(N + 1).fill(1);
+const hasOddCycle = Array(N + 1).fill(false);
+let answer = 0;
+const output = [];
 
 function find(x) {
-  if (parent[x] !== x) parent[x] = find(parent[x]);
+  if (parent[x] !== x) {
+    const origParent = parent[x];
+    const root = find(origParent);
+    parent[x] = root;
+    color[x] ^= color[origParent];
+  }
   return parent[x];
 }
 
-function union(a, b) {
-  a = find(a);
-  b = find(b);
-  if (a === b) return;
-  const totalA = sizeEven[a] + sizeOdd[a];
-  const totalB = sizeEven[b] + sizeOdd[b];
-  if (totalA < totalB) [a, b] = [b, a];
-  parent[b] = a;
-  sizeEven[a] += sizeEven[b];
-  sizeOdd[a] += sizeOdd[b];
-}
+function union(u, v) {
+  const ru = find(u);
+  const rv = find(v);
 
-for (let v = 1; v <= N; v++) {
-  sizeEven[v] = 1;
-  sizeOdd[v + N] = 1;
-}
-
-for (const [u, v] of edges) {
-  union(u, v + N);
-  union(u + N, v);
-}
-
-const compEvenSize = {};
-for (let v = 1; v <= N; v++) {
-  const root = find(v);
-  compEvenSize[root] = sizeEven[root];
-}
-
-const out = [];
-for (const [s, t] of queries) {
-  const root = find(s);
-  const totalEven = compEvenSize[root] || 0;
-  if (find(t) === root) {
-    out.push(totalEven.toString());
-  } else {
-    out.push("0");
+  if (ru === rv) {
+    if ((color[u] ^ color[v]) === 0 && !hasOddCycle[ru]) {
+      hasOddCycle[ru] = true;
+      answer += compSize[ru];
+    }
+    return;
   }
+
+  if (compSize[ru] < compSize[rv]) {
+    [u, v] = [v, u];
+  }
+
+  const ruNew = find(u);
+  const rvNew = find(v);
+
+  const before =
+    (hasOddCycle[ruNew] ? compSize[ruNew] : 0) +
+    (hasOddCycle[rvNew] ? compSize[rvNew] : 0);
+
+  parent[rvNew] = ruNew;
+  color[rvNew] = color[u] ^ color[v] ^ 1;
+  compSize[ruNew] += compSize[rvNew];
+  hasOddCycle[ruNew] =
+    hasOddCycle[ruNew] || hasOddCycle[rvNew] || (color[u] ^ color[v]) === 0;
+
+  const after = hasOddCycle[ruNew] ? compSize[ruNew] : 0;
+  answer += after - before;
 }
 
-console.log(out.join("\n"));
-\
+for (let i = 1; i <= Q; i++) {
+  const [u, v] = input[i].split(" ").map(Number);
+  union(u, v);
+  output.push(answer);
+}
+
+console.log(output.join("\n"));
