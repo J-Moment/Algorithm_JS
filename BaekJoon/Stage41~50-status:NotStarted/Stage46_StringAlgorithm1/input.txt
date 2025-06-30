@@ -1,17 +1,2 @@
-4
-hello
-hell
-heaven
-goodbye
-3
-hi
-he
-h
-7
-structure
-structures
-ride
-riders
-stress
-solstice
-ridiculous
+5
+1 2 3 4 5
